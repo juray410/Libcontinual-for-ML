@@ -4,4 +4,4 @@ data_root: /data/lqx/cifar100
 image_size: 32
 pin_memory: False
 augment: True
-num_workers: 24
+num_workers: 0

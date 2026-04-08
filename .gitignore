@@ -4,3 +4,20 @@
 __pycache__
 .venv-3.8/
 
+# Python 编译缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 数据集
+data/
+
+# IDE 配置文件（PyCharm / VS Code）
+.idea/
+
+# 训练出的模型权重文件
+*.pth
+*.pt
+*.ckpt
+

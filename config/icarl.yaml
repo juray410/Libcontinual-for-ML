@@ -6,7 +6,7 @@ includes:
   # - backbones/resnet12.yaml
 
 # data_root: /data/fanzhichen/continual/cifar100
-data_root: ~/datasets/cifar100
+data_root: ./data/cifar10
 image_size: 32
 
 
@@ -15,9 +15,9 @@ warmup: 3
 
 save_path: ./
 # data
-init_cls_num: 10
-inc_cls_num: 10
-task_num: 10
+init_cls_num: 2
+inc_cls_num: 2
+task_num: 5
 
 
 batch_size: 128
@@ -25,9 +25,9 @@ batch_size: 128
 init_epoch: 200  #100
 epoch: 170  #100
  
-device_ids: 2
+device_ids: 0
 n_gpu: 1
-val_per_epoch: 1
+val_per_epoch: 10
 
 
 optimizer:
@@ -46,23 +46,23 @@ lr_scheduler:
 backbone:
   name: cifar_resnet32
   kwargs:
-    num_classes: 100
+    num_classes: 10
     args: 
-      dataset: cifar100
+      dataset: cifar10
 
 
 buffer:
   name: LinearHerdingBuffer
   kwargs:
-    buffer_size: 2000
+    buffer_size: 200
     batch_size: 64
     # strategy: herding     # random, equal_random, reservoir, herding
 
 classifier:
   name: ICarl
   kwargs:
-    num_class: 100
+    num_class: 10
     feat_dim: 64
-    init_cls_num: 10
-    inc_cls_num: 10
-    task_num: 10
+    init_cls_num: 2
+    inc_cls_num: 2
+    task_num: 5
