@@ -1,0 +1,60 @@
+includes:
+  - headers/data.yaml
+  - headers/device.yaml
+
+# 1. 基础数据与路径配置
+data_root: ./data/cifar10
+image_size: 32
+save_path: ./
+
+# 2. CIFAR-10 课程表设定 (满分 10 类)
+init_cls_num: 2
+inc_cls_num: 2
+task_num: 5
+
+# 3.训练节奏控制
+batch_size: 128
+init_epoch: 3 #初始任务训练轮数
+epoch: 3 #后续增量任务训练轮数
+val_per_epoch: 3
+
+# 4.硬件配置
+device_ids: [0]
+n_gpu: 1
+
+# 5.优化器与学习率
+optimizer:
+  name: SGD
+  kwargs:
+    lr: 0.1
+    momentum: 0.9
+    weight_decay: 0.0005
+
+lr_scheduler:
+  name: CosineAnnealingLR
+  kwargs:
+    T_max: 100
+
+# 6.视觉骨干网络
+backbone:
+  name: cifar_resnet32
+  kwargs:
+    num_classes: 10
+    args:
+      dataset: cifar10
+
+# 7.连续学习算法(Classifier/Method)
+classifier:
+  name: KeepLoRA
+  kwargs:
+    # 基础参数
+    num_class: 10
+    feat_dim: 64
+    init_cls_num: 2
+    inc_cls_num: 2
+    task_num: 5
+    # KeepLoRA专属参数
+    epsilon_w: 0.85 #预训练主空间能量保留率
+    epsilon_f: 0.99 #历史特征方向能量保留率
+    lora_rank: 8 #降维秩 r
+    lora_alpha: 16 #缩放系数 alpha
